@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 class CategoryRepository
 {
 
+    public $getAllCategories;
     private Category $category;
     public function __construct()
     {

@@ -21,16 +21,11 @@ class CategoryRepository
         return $this->category->latest()->filter(request(['search']))->get();
     }
 
-    public function create(): Category
+    public function create($request): Category
     {
-        $data = request()->validate([
-            'name' => ['required', 'string', 'max:255' , 'unique:categories,name'],
-            'slug' => ['required', 'string', 'max:255' , 'unique:categories,slug'],
-        ]);
-        $data['slug'] = str_slug($data['name'].Carbon::now('MM-YYYY'));
-        Category::create($data);
-        return $this->category->create($data);
-
+        $request['slug'] = str_slug($request['name'].Carbon::now('MM-YYYY'));
+        Category::create($request);
+        return $this->category->create($request);
     }
 
     public function update(array $data, Category $category): bool

@@ -41,7 +41,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $categories = $this->categoryRepository->create();
+        $categories = $this->categoryRepository->create($request);
     }
 
     /**

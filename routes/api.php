@@ -15,12 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 Route::get('/', [CategoryController::class, 'index'])
-    ->middleware('auth:sanctum')
     ->name('dashboard');
 
 require __DIR__.'/auth.php';

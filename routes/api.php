@@ -24,4 +24,4 @@ Route::get('/', [CategoryController::class, 'index'])
 //    ->middleware('auth')
     ->name('dashboard');
 
-require __DIR__.'/auth.php';
+//require __DIR__.'/auth.php';

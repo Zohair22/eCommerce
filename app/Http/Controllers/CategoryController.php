@@ -33,12 +33,7 @@ class CategoryController extends Controller
      */
     public function create(): Response
     {
-        $categories = [
-            'name' => '',
-            'slug' => '',
-        ];
-        Category::created($categories);
-        return Inertia::render('Category/Create', compact('categories'));
+        return Inertia::render('Category/Create');
     }
 
     /**
@@ -46,7 +41,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $categories = $this->categoryRepository->create();
     }
 
     /**

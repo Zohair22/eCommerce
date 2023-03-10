@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::get('/', [CategoryController::class, 'index'])->name('dashboard');
+Route::get('/', [CategoryController::class, 'index'])
+    ->middleware('auth:sanctum')
+    ->name('dashboard');
 
 require __DIR__.'/auth.php';

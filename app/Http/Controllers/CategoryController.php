@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Repositories\CategoryRepository;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class CategoryController extends Controller
 {
+
+    private CategoryRepository $categoryRepository;
+
+    public function __construct(){
+        $this->categoryRepository = new CategoryRepository();
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(): Response
     {
-        $categories = Category::latest()->filter(request(['search']))->get();
+        $categories = $this->categoryRepository->getAllCategories();
         $filters = Request::all(['search']);
         return Inertia::render('Dashboard', compact('filters','categories'));
     }

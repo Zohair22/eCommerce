@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -39,9 +40,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store()
     {
-        $categories = $this->categoryRepository->create($request);
+        $this->categoryRepository->create();
+        return redirect()->route('dashboard')->with('success', 'Category created successfully');
     }
 
     /**
@@ -55,17 +57,18 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Category $category): Response
     {
-        //
+        return Inertia::render('Category/Edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Category $category): RedirectResponse
     {
-        //
+        $this->categoryRepository->update($category);
+        return redirect('/?search='.$category->name)->with('success', 'Category updated successfully');
     }
 
     /**
@@ -73,6 +76,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $this->categoryRepository->delete($category);
+        return redirect()->route('dashboard')->with('success', 'Category deleted successfully');
     }
 }

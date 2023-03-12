@@ -2,7 +2,8 @@
 import Product from "@/Shared/Product/Product.vue";
 defineProps([
     'category',
-    'filters'
+    'filters',
+    'success'
 ])
 </script>
 

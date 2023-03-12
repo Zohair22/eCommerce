@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +28,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', 'index')->name('dashboard');
         Route::get('/category/create', 'create')->name('category.create');
         Route::post('/category', 'store')->name('category.store');
-        Route::get('/category/{category}', 'show')->name('category.show');
         Route::get('/category/{category}/edit', 'edit')->name('category.edit');
         Route::patch('/category/{category}', 'update')->name('category.update');
-        Route::delete('/category/{category}', 'destroy')->name('category.destroy');
+        Route::get('/category/{category}', 'destroy')->name('category.destroy');
     });
+
+
+    Route::controller(ProductController::class)->prefix('product')->group(function () {
+        Route::get('/', 'index')->name('product');
+        Route::get('/create', 'create')->name('product.create');
+        Route::post('/', 'store')->name('product.store');
+        Route::get('/{product}/edit', 'edit')->name('product.edit');
+        Route::patch('/{product}', 'update')->name('product.update');
+        Route::get('/{product}', 'destroy')->name('product.destroy');
+    });
+
+
 });
 
 require __DIR__.'/auth.php';

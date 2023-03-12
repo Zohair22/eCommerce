@@ -1,6 +1,6 @@
 import './bootstrap';
 import '../css/app.css';
-
+import Alpine from 'alpinejs'
 import { createApp, h } from 'vue';
 import { createInertiaApp, Head, Link } from "@inertiajs/vue3";
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -23,3 +23,7 @@ createInertiaApp({
         color: '#4B5563',
     },
 });
+
+window.Alpine = Alpine
+
+Alpine.start()

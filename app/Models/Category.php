@@ -10,6 +10,7 @@ class Category extends Model
 {
     use HasFactory;
 
+    public mixed $name;
     protected $guarded = [];
     protected $with = ['products'];
 

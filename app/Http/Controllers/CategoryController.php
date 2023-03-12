@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use Illuminate\Http\RedirectResponse;
@@ -40,7 +38,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         $this->categoryRepository->create();
         return redirect()->route('dashboard')->with('success', 'Category created successfully');

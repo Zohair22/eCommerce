@@ -1,4 +1,5 @@
 <template>
+    <Head title="Create Product" />
     <authenticated-layout>
         <template #header >
             <div class="lg:grid md:grid grid-cols-3 items-center">
@@ -8,11 +9,11 @@
             </div>
         </template>
 
-        <form @submit.prevent="submit"  class="max-w-2xl mx-auto transition-all">
+        <form @submit.prevent="submit"  class="max-w-3xl mx-auto transition-all p-10">
 
             <div class="mt-16 items-center">
                 <div class="p-4 bg-white rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <h2 class="font-semibold text-center transition-all transform duration-700 text-xl text-gray-800 dark:text-gray-200 leading-tight mb-5">
+                    <h2 class="font-bold text-center transition-all transform duration-700 text-xl text-gray-800 dark:text-gray-200 leading-tight mb-5">
                         Create Product
                     </h2>
                     <div class="flex flex-col">
@@ -59,7 +60,16 @@
                             <label class="block text-gray-700 dark:text-gray-100 text-sm font-bold mb-2" for="image">
                                 Image
                             </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="image" type="text" required placeholder="Image" v-model="product.image">
+                            <input
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                @input="product.image = $event.target.files[0]"
+                                id="image"
+                                type="file"
+                                required
+                                placeholder="Image"
+                                width="300px"
+                                height="500px"
+                            >
                             <p
                                 v-if="$page.props.errors.image"
                                 v-text="$page.props.errors.image"
@@ -103,7 +113,7 @@
                             </label>
                             <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="category_id" type="text" required placeholder="Category" v-model="product.category_id">
                                 <option value="">Select Category</option>
-                                <option v-for="category in $page.props.allCat.categories" :value="category.id">@{{ category.name }}</option>
+                                <option v-for="category in $page.props.allCats" :value="category.id">@{{ category.name }}</option>
                             </select>
                             <p
                                 v-if="$page.props.errors.category_id"
@@ -113,8 +123,18 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="user_id" v-model="$page.props.auth.user.id ">
+                    <input type="hidden" name="user_id" v-model="product.user_id">
                     <input type="hidden" name="slug" v-model="product.slug">
+                    <p
+                        v-if="$page.props.errors.user_id"
+                        v-text="$page.props.errors.user_id"
+                        class="text-red-500 text-sm mt-1"
+                    />
+                    <p
+                        v-if="$page.props.errors.slug"
+                        v-text="$page.props.errors.slug"
+                        class="text-red-500 text-sm mt-1"
+                    />
 
                     <div class="flex flex-col">
                         <div class="mb-4">

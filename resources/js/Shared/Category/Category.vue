@@ -14,11 +14,11 @@ defineProps([
     </h1>
     <div class="lg:grid md:grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
         <div v-for="(product, index) in category.products" class="sm:mb-4">
-            <div class="px-2 col-span-1 py-5 sm:px-6 bg-gray-100 h-full w-full dark:bg-gray-600 rounded-2xl overflow-hidden shadow-2xl" v-if="filters.search !== null">
-                <Product :product="product" />
+            <div class="col-span-1 bg-gray-100 h-full dark:bg-gray-600 rounded-3xl overflow-hidden shadow-2xl" v-if="filters.search !== null">
+                <Product :product="product" :filters="filters" />
             </div>
-            <div class="px-2 col-span-1 py-5 sm:px-6 bg-gray-100 h-full dark:bg-gray-600 rounded-2xl overflow-hidden shadow-2xl" v-else-if="index < 3">
-                <Product :product="product" />
+            <div class="col-span-1 bg-gray-100 h-full dark:bg-gray-600 rounded-3xl overflow-hidden shadow-2xl" v-else-if="index < 3">
+                <Product :product="product" :filters="filters" />
             </div>
         </div>
         <div class="lg:col-end-4 md:grid-cols-3 justify-self-end" v-if="filters.search === null">

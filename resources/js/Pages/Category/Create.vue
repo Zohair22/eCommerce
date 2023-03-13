@@ -1,5 +1,5 @@
 <template>
-    <Head title="eCommerce" />
+    <Head title="Create Category" />
 
     <AuthenticatedLayout>
         <template #header >

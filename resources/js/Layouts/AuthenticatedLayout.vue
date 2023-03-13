@@ -29,6 +29,7 @@ const showingNavigationDropdown = ref(false);
 
                         <!--Categories-->
                         <div class="ml-3 relative hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
                             <Dropdown align="right" width="48">
                                 <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -62,15 +63,63 @@ const showingNavigationDropdown = ref(false);
 
                                         <DropdownLink
                                             class="col-span-1"
-                                            v-for="category in $page.props.allCat.categories"
-                                            :key="category.slug"
+                                            v-for="category in $page.props.allCats"
+                                            :key="category.name"
                                             :href="'/?search='+category.name"
                                             :active="search === category.name"
                                             v-text="category.name"
                                         />
                                     </div>
                                 </template>
+
                             </Dropdown>
+
+
+                            <Dropdown align="right" width="48">
+                                <template #trigger>
+                                        <span class="inline-flex rounded-md">
+                                            <button
+                                                type="button"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                                Products
+
+                                                <svg
+                                                    class="ml-2 -mr-0.5 h-4 w-4"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                        clip-rule="evenodd"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                </template>
+
+                                <template #content>
+                                    <div class="h-48 divide-y z-20 overflow-y-auto">
+                                        <DropdownLink :href="route('product.create')" class="flex items-center p-3 text-sm font-medium text-blue-600 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-blue-500 hover:underline col-span-1">
+                                            Creat Product
+                                        </DropdownLink>
+
+                                        <DropdownLink
+                                            class="col-span-1"
+                                            v-for="product in $page.props.allProducts"
+                                            :key="product.name"
+                                            :href="'/?search='+product.name"
+                                            :active="search === product.name"
+                                            v-text="product.name"
+                                        />
+                                    </div>
+                                </template>
+
+                            </Dropdown>
+
+
                         </div>
                     </div>
 
@@ -159,6 +208,7 @@ const showingNavigationDropdown = ref(false);
                         >
                             Home
                         </ResponsiveNavLink>
+
                         <Dropdown align="right" width="48">
                             <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -185,17 +235,60 @@ const showingNavigationDropdown = ref(false);
                             </template>
 
                             <template #content class="grid grid-cols-3 ">
-                                <DropdownLink :href="'#'" class="bg-dots-darker text-xl font-bold bg-gray-600 text-white hover:bg-gray-800"> Create Category </DropdownLink>
+                                <DropdownLink :href="route('category.create')" class="bg-dots-darker text-xl font-bold bg-gray-600 text-white hover:bg-gray-800"> Create Category </DropdownLink>
                                 <hr>
 
                                 <DropdownLink
-                                    v-for="category in $page.props.allCat.categories"
-                                    :key="category.slug"
-                                    :href="'#'+category.slug"
+                                    v-for="category in $page.props.allCats"
+                                    :key="category.name"
+                                    :href="'/?search='+category.name"
+                                    :active="search === category.name"
                                     v-text="category.name"
                                 />
                             </template>
                         </Dropdown>
+
+
+                        <Dropdown align="right" width="48">
+                            <template #trigger>
+                                        <span class="inline-flex rounded-md">
+                                            <button
+                                                type="button"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                                Products
+
+                                                <svg
+                                                    class="ml-2 -mr-0.5 h-4 w-4"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                        clip-rule="evenodd"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </span>
+                            </template>
+
+                            <template #content class="grid grid-cols-3 ">
+                                <DropdownLink :href="route('product.create')" class="bg-dots-darker text-xl font-bold bg-gray-600 text-white hover:bg-gray-800"> Create Product </DropdownLink>
+                                <hr>
+
+                                <DropdownLink
+                                    v-for="product in $page.props.allProducts"
+                                    :key="product.name"
+                                    :href="'/?search='+product.name"
+                                    :active="search === product.name"
+                                    v-text="product.name"
+                                />
+                            </template>
+                        </Dropdown>
+
+
                     </div>
                     <div class="px-4">
                         <div class="font-medium text-base text-gray-800 dark:text-gray-200">

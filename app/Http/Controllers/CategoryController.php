@@ -66,7 +66,7 @@ class CategoryController extends Controller
     public function update(Category $category): RedirectResponse
     {
         $this->categoryRepository->update($category);
-        return redirect('/?search='.$category->name)->with('success', 'Category updated successfully');
+        return redirect('/?search='.$category['name'])->with('success', 'Category updated successfully');
     }
 
     /**

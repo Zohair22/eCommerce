@@ -22,13 +22,13 @@ let submit = () => (search, function (value) {
 </script>
 
 <template>
-    <Head title="eCommerce" />
+    <Head :title=" filters.search ? filters.search : 'Home'" />
 
-    <AuthenticatedLayout :categories="categories" :filters.search="search">
+    <AuthenticatedLayout :categories="categories" :filters="search">
         <template #header >
             <div class="lg:grid md:grid grid-cols-3 items-center">
                 <h2 class="font-semibold transition-all transform duration-700 text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Home
+                    {{ filters.search ? filters.search : 'Home' }}
                 </h2>
                 <form method="get" action="/" class="col-span-1 flex items-center justify-between">
                     <input class="bg-gray-200 rounded-lg border-2 w-full mr-2 border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white px-4 py-2" type="text" name="search" placeholder="Search products"
@@ -54,7 +54,7 @@ let submit = () => (search, function (value) {
                     {{ $page.props.success }}
                 </div>
 
-                <div class="mb-10 items-center px-4 py-8 sm:px-6 bg-gray-200 h-full dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl" v-if="category.products !== 0">
+                <div class="mb-10 items-center px-4 py-8 sm:px-6 bg-gray-200 h-full dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl" v-if="category.products">
 
                     <div class="flex items-center justify-between">
                         <h1 class="px-6 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-600 shadow-3xl font-extrabold transition-all transform duration-700 text-lg">

@@ -1,11 +1,11 @@
 <template>
-    <Head title="eCommerce" />
+    <Head title="Update Category" />
 
     <AuthenticatedLayout>
         <template #header >
             <div class="lg:grid md:grid grid-cols-3 items-center">
                 <h2 class="font-semibold transition-all transform duration-700 text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Create Category
+                    Update Category Name
                 </h2>
             </div>
         </template>
@@ -15,7 +15,7 @@
             <div class="mt-16 items-center">
                 <div class="p-4 bg-white rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <h2 class="font-semibold text-center transition-all transform duration-700 text-xl text-gray-800 dark:text-gray-200 leading-tight mb-5">
-                        Create Category
+                        Update Category Name
                     </h2>
                     <div class="flex flex-col">
                         <div class="mb-4">
@@ -55,14 +55,14 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {useForm} from "@inertiajs/inertia-vue3";
 
-let props = defineProps({
-    category : Array,
-})
+let props = defineProps([
+    'category'
+    ]);
 
-let category = useForm(props.category);
+let form = useForm(props.category);
 
-let submit = () => {
-    category.patch('/category/'+props.category.name, { preserveScroll: true, preserveState: true});
+let submit  = () => {
+    form.patch('/category/'+props.category.name, { preserveScroll: true, preserveState: true});
 }
 </script>
 

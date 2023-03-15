@@ -12,6 +12,8 @@ class Product extends Model
 
     protected $guarded = [];
 
+    protected $with = [];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
@@ -22,7 +24,7 @@ class Product extends Model
         if (isset($image)){
             return asset('storage/'.$image);
         }
-        return asset('storage/images/1sxw8AD2rsmiXZu3cQ9nHN3nECzH2FsMrHlR11oC.jpg');
+        return asset('storage/images/default.jpg');
     }
 
     public function getRouteKeyName(): string
@@ -30,5 +32,18 @@ class Product extends Model
         return 'slug';
     }
 
+    public function scopeFilter($query, array $filters) : void
+    {
+        $query->when($filters['search'] ?? false, function ($query, $search)
+        {
+            return $query->where(
+                function ($query) use ($search)
+                {
+                    return $query
+                        ->where('name', 'like', '%'.$search.'%');
+                }
+            );
+        });
+    }
 
 }

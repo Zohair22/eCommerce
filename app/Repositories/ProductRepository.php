@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Illuminate\Validation\Rule;
 
 class ProductRepository
 {
@@ -12,6 +13,12 @@ class ProductRepository
     {
         $this->products = new Product();
     }
+
+    public function find(Product $product)
+    {
+        return Product::where('slug', $product->slug)->first();
+    }
+
 
     public function store()
     {
@@ -26,7 +33,7 @@ class ProductRepository
             'category_id' => 'required',
             'user_id' => '',
         ]);
-        $request['slug'] = str_slug($request['name'],'','');
+        $request['slug'] = str_slug($request['name']);
         if (isset($request['image']))
         {
             $request['image'] = request('image')->store(('images'));
@@ -36,14 +43,37 @@ class ProductRepository
         return Product::create($request)->category()->first();
     }
 
-    public function update($id, $data)
+
+    public function update(Product $product)
     {
-        return $this->products->update($id, $data);
+        $product = $this->find($product);
+        $request = request()->validate([
+            'name' => [ 'required', Rule::unique('products')->ignore($product->id) ],
+            'slug' => [ Rule::unique('products')->ignore($product->id) ],
+            'price' => 'required',
+            'description' => 'required',
+            'discount' => 'required',
+            'stock' => 'required',
+            'category_id' => 'required',
+            'user_id' => '',
+            request('image') !== $product->image ?? 'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+
+        $request['slug'] = str_slug($request['name']);
+
+        if ( !!request('image') && request('image') !== $product->image)
+        {
+            $request['image'] = request('image')->store(('images'));
+        }
+
+        $request['user_id'] = auth()->user()->id;
+        return $product->update($request);
     }
 
     public function delete($product)
     {
-        $product = $product->where('slug', $product->slug)->first();
+        $product = $this->find($product);
         return $product->delete();
     }
 

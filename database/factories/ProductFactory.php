@@ -2,11 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ * @extends Factory<Product>
  */
 class ProductFactory extends Factory
 {
@@ -18,9 +19,9 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'slug' => $this->faker->slug(),
-            'description' => $this->faker->sentences('3', true),
+            'name' => $this->faker->unique()->name(),
+            'slug' => $this->faker->unique()->slug(),
+            'description' => $this->faker->paragraphs('3', true),
             'price' => $this->faker->randomFloat(2, 0, 1000),
             'stock' => $this->faker->randomDigit,
             'discount' => $this->faker->randomFloat(2, -1, 50),

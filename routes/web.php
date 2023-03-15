@@ -36,10 +36,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(ProductController::class)->prefix('product')->group(function () {
         Route::get('/', 'index')->name('product');
+        Route::get('/{product}/show', 'show')->name('product.show');
         Route::get('/create', 'create')->name('product.create');
         Route::post('/', 'store')->name('product.store');
         Route::get('/{product}/edit', 'edit')->name('product.edit');
-        Route::patch('/{product}', 'update')->name('product.update');
+        Route::post('/{product}', 'update')->name('product.update');
         Route::get('/{product}', 'destroy')->name('product.destroy');
     });
 

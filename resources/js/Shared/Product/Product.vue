@@ -1,4 +1,5 @@
 <script setup>
+
 let props = defineProps({
     product: Object,
     filters: Object,
@@ -8,18 +9,24 @@ let props = defineProps({
 
 <template>
     <div>
-        <img :src="product.image"
-              class="rounded-3xl bg-center w-full h-96 cursor-pointer filter backdrop-filter grayscale hover:grayscale-0 hover:object-cover object-contain transition-all transform duration-700"/>
+        <Link :href="'/product/'+ product.slug + '/show'" class="text-gray-900 dark:text-gray-200 hover:text-gray-700 transition-all transform duration-700">
+            <img
+                :src="product.image"
+                class="rounded-t-3xl w-full mx-auto h-48 cursor-pointer filter backdrop-filter grayscale hover:grayscale-0 hover:object-cover object-fill transition-all transform duration-700"/>
+        </Link>
         <h3 class="mx-auto font-semibold text-center dark:text-white">
-            <Link :href="'/product/' + product.slug" v-text="product.name"
-                  class="bg-gray-500 hover:bg-gray-70 w-fit text-white px-5 pb-2 pt-4 rounded-2xl dark:text-white text-gray-900 dark:bg-gray-700 dark:hover:bg-gray-800 transition-all transform duration-700"/>
+            <Link
+                :href="'/product/'+ product.slug + '/show'"
+                v-text="product.name"
+                class="bg-gray-500 hover:bg-gray-70 w-fit text-white px-5 pb-2 pt-4 rounded-2xl dark:text-white text-gray-900 dark:bg-gray-700 dark:hover:bg-gray-800 transition-all transform duration-700"
+            />
         </h3>
     </div>
     <div class="col-span-1 px-2 py-10 sm:px-6">
-        <h3 class="text-sm m-2 leading-6 font-medium text-gray-900 dark:text-gray-300">
-            {{ product.description }}
-        </h3>
-        <hr class="mb-2">
+        <!--        <h3 class="text-sm m-2 leading-6 font-medium text-gray-900 dark:text-gray-300">-->
+        <!--            {{ product.description }}-->
+        <!--        </h3>-->
+        <!--        <hr class="mb-2">-->
         <div class="flex justify-between items-center">
             <h3 class="text-md mb-1 leading-6 font-medium text-white">
                 <span class="bg-red-700 hover:bg-red-800 transition-all transform duration-700 rounded-3xl px-4 py-0.5">In stock : {{

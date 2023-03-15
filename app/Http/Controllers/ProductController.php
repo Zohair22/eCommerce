@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -37,7 +37,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
         $category = $this->productRepository->store();
         $category = $category->first();
@@ -47,25 +47,28 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product): Response
     {
-        //
+        $product = $this->productRepository->find($product);
+        return Inertia::render('Product/Show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Product $product): Response
     {
-        //
+        $product = $this->productRepository->find($product);
+        return Inertia::render('Product/Edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Product $product): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
-        //
+        $this->productRepository->update($product);
+        return redirect()->back()->with('success', 'Product Updated Successfully');
     }
 
     /**
@@ -73,7 +76,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
+        $category = $product->category()->first();
         $this->productRepository->delete($product);
-        return back()->with('success', 'Product Deleted Successfully');
+        return redirect('/?search='. $category['name'])->with('success', 'Product Deleted Successfully');
     }
 }

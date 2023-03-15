@@ -52,7 +52,7 @@ class CategoryRepository
 
     public function delete(Category $category): bool
     {
-        $category = $category->where('name', $category->name)->first();
+        $category = Category::where('name', $category['name'])->first();
         return $category->delete();
     }
 }

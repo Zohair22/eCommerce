@@ -3,7 +3,6 @@ import Product from "@/Shared/Product/Product.vue";
 defineProps([
     'category',
     'filters',
-    'success'
 ])
 </script>
 
@@ -21,7 +20,7 @@ defineProps([
                 <Product :product="product" :filters="filters" />
             </div>
         </div>
-        <div class="lg:col-end-4 md:grid-cols-3 justify-self-end" v-if="filters.search === null">
+        <div class="lg:col-end-4 md:grid-cols-3 justify-self-end self-end" v-if="filters.search === null">
             <Link :href="'/?search='+category.name" v-text="'More ->'" class="text-white bg-blue-600 hover:bg-blue-800 transition-all transform duration-700 px-3 py-0.5 rounded-3xl" />
         </div>
     </div>

@@ -24,7 +24,8 @@
                             <input class="shadow appearance-none border required rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" required placeholder="Category Name" v-model="product.name">
                             <p
                                 v-if="$page.props.errors.name"
-                                v-text="$page.props.errors.name"
+                                v-for="$error in $page.props.errors.name"
+                                v-text="$error"
                                 class="text-red-500 text-sm mt-1"
                             />
                         </div>
@@ -37,7 +38,8 @@
                             <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" type="text" required placeholder="Description" v-model="product.description"></textarea>
                             <p
                                 v-if="$page.props.errors.description"
-                                v-text="$page.props.errors.description"
+                                v-for="$error in $page.props.errors.description"
+                                v-text="$error"
                                 class="text-red-500 text-sm mt-1"
                             />
                         </div>
@@ -50,7 +52,8 @@
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="price" type="text" required placeholder="Price" v-model="product.price">
                             <p
                                 v-if="$page.props.errors.price"
-                                v-text="$page.props.errors.price"
+                                v-for="$error in $page.props.errors.price"
+                                v-text="$error"
                                 class="text-red-500 text-sm mt-1"
                             />
                         </div>
@@ -73,7 +76,8 @@
                             >
                             <p
                                 v-if="$page.props.errors.image"
-                                v-text="$page.props.errors.image"
+                                v-for="$error in $page.props.errors.image"
+                                v-text="$error"
                                 class="text-red-500 text-sm mt-1"
                             />
                         </div>
@@ -94,7 +98,8 @@
                             >
                             <p
                                 v-if="$page.props.errors.discount"
-                                v-text="$page.props.errors.discount"
+                                v-for="$error in $page.props.errors.discount"
+                                v-text="$error"
                                 class="text-red-500 text-sm mt-1"
                             />
                         </div>
@@ -108,7 +113,8 @@
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="stock" type="text" required placeholder="stock" v-model="product.stock">
                             <p
                                 v-if="$page.props.errors.stock"
-                                v-text="$page.props.errors.stock"
+                                v-for="$error in $page.props.errors.stock"
+                                v-text="$error"
                                 class="text-red-500 text-sm mt-1"
                             />
                         </div>
@@ -125,7 +131,8 @@
                             </select>
                             <p
                                 v-if="$page.props.errors.category_id"
-                                v-text="$page.props.errors.category_id"
+                                v-for="$error in $page.props.errors.category_id"
+                                v-text="$error"
                                 class="text-red-500 text-sm mt-1"
                             />
                         </div>
@@ -135,12 +142,14 @@
                     <input type="hidden" name="slug" v-model="product.slug">
                     <p
                         v-if="$page.props.errors.user_id"
-                        v-text="$page.props.errors.user_id"
+                        v-for="$error in $page.props.errors.user_id"
+                        v-text="$error"
                         class="text-red-500 text-sm mt-1"
                     />
                     <p
                         v-if="$page.props.errors.slug"
-                        v-text="$page.props.errors.slug"
+                        v-for="$error in $page.props.errors.slug"
+                        v-text="$error"
                         class="text-red-500 text-sm mt-1"
                     />
 

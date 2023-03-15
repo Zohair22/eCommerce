@@ -27,9 +27,8 @@ const showingNavigationDropdown = ref(false);
                             </NavLink>
                         </div>
 
-                        <!--Categories-->
                         <div class="ml-3 relative hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-
+                            <!--Categories Drop Down Menu-->
                             <Dropdown align="right" width="48">
                                 <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -54,10 +53,9 @@ const showingNavigationDropdown = ref(false);
                                             </button>
                                         </span>
                                 </template>
-
                                 <template #content>
                                     <div class="h-48 divide-y z-20 overflow-y-auto">
-                                        <DropdownLink :href="route('category.create')" class="flex items-center p-3 text-sm font-medium text-blue-600 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-blue-500 hover:underline col-span-1">
+                                        <DropdownLink v-if="!!$page.props.auth.user" :href="route('category.create')" class="flex items-center p-3 text-sm font-medium text-blue-600 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-blue-500 hover:underline col-span-1">
                                             Create Category
                                         </DropdownLink>
 
@@ -71,10 +69,9 @@ const showingNavigationDropdown = ref(false);
                                         />
                                     </div>
                                 </template>
-
                             </Dropdown>
 
-
+                            <!--Categories Drop Down Menu-->
                             <Dropdown align="right" width="48">
                                 <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -99,10 +96,9 @@ const showingNavigationDropdown = ref(false);
                                             </button>
                                         </span>
                                 </template>
-
                                 <template #content>
                                     <div class="h-48 divide-y z-20 overflow-y-auto">
-                                        <DropdownLink :href="route('product.create')" class="flex items-center p-3 text-sm font-medium text-blue-600 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-blue-500 hover:underline col-span-1">
+                                        <DropdownLink v-if="!!$page.props.auth.user" :href="route('product.create')" class="flex items-center p-3 text-sm font-medium text-blue-600 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-blue-500 hover:underline col-span-1">
                                             Creat Product
                                         </DropdownLink>
 
@@ -110,22 +106,19 @@ const showingNavigationDropdown = ref(false);
                                             class="col-span-1"
                                             v-for="product in $page.props.allProducts"
                                             :key="product.name"
-                                            :href="'/?search='+product.name"
+                                            :href="'/product/'+ product.slug + '/show'"
                                             :active="search === product.name"
                                             v-text="product.name"
                                         />
                                     </div>
                                 </template>
-
                             </Dropdown>
-
-
                         </div>
                     </div>
 
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <!-- Settings Dropdown -->
-                        <div class="ml-3 relative">
+                        <div class="ml-3 relative" v-if="!!$page.props.auth.user" >
                             <Dropdown align="right" width="48">
                                 <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -158,6 +151,15 @@ const showingNavigationDropdown = ref(false);
                                     </DropdownLink>
                                 </template>
                             </Dropdown>
+                        </div>
+                        <div v-else>
+                            <div class="ml-3 relative">
+                                <div class="ml-3">
+                                    <Link :href="route('login')" class="text-md font-medium text-gray-600 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300">
+                                        Login As Administrator
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -248,7 +250,6 @@ const showingNavigationDropdown = ref(false);
                             </template>
                         </Dropdown>
 
-
                         <Dropdown align="right" width="48">
                             <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -281,23 +282,22 @@ const showingNavigationDropdown = ref(false);
                                 <DropdownLink
                                     v-for="product in $page.props.allProducts"
                                     :key="product.name"
-                                    :href="'/?search='+product.name"
+                                    :href="'/product/'+ product.slug + '/show'"
                                     :active="search === product.name"
                                     v-text="product.name"
                                 />
                             </template>
                         </Dropdown>
 
-
                     </div>
-                    <div class="px-4">
+                    <div class="px-4" v-if="!!$page.props.auth.user">
                         <div class="font-medium text-base text-gray-800 dark:text-gray-200">
                             {{ $page.props.auth.user.name }}
                         </div>
                         <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
                     </div>
 
-                    <div class="mt-3 space-y-1">
+                    <div class="mt-3 space-y-1" v-if="!!$page.props.auth.user ">
                         <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                             Log Out

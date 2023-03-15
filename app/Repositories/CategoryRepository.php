@@ -17,9 +17,9 @@ class CategoryRepository
         $this->category = new Category();
     }
 
-    public function getAllCategories(): Collection
+    public function getAllCategories()
     {
-        return $this->category->latest()->filter(request(['search']))->get();
+        return $this->category->latest()->filter(request(['search']))->paginate(5)->withQueryString();
     }
 
     public function create(): Category
@@ -27,6 +27,7 @@ class CategoryRepository
         $request = request()->validate([
             'name' => ['required', 'string', 'max:255', 'unique:categories'],
             'slug' => ['unique:categories'],
+            'description' => ['required', 'string'],
             'created_at' => [''],
             'updated_at' => [''],
         ]);
@@ -45,6 +46,7 @@ class CategoryRepository
                 ($category->id),
             'slug' => 'required|string|max:255|'. Rule::unique('categories')->ignore
                 ($category->id),
+            'description' => 'required|string',
         ]);
         $request['slug'] = str_slug($request['name']);
         return $category->update($request);

@@ -6,7 +6,6 @@ use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Inertia\Inertia;
 use Inertia\Response;

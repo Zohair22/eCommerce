@@ -75,7 +75,7 @@ let submit = () => (search, function (value) {
                     v-if="!!category.products.length"
                 >
 
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between" v-if="!!$page.props.auth.user">
                         <EditCategory :name="category.name" />
                         <DeleteCategory :name="category.name" />
                     </div>

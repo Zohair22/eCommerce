@@ -29,43 +29,56 @@ let props = defineProps({
             </div>
         </template>
 
-        <div class="grid gap-4 grid-cols-2 justify-between dark:bg-gray-600 dark:text-white max-w-6xl mx-auto bg-gray-300 max-h-fit rounded-3xl shadow-2xl mt-16">
+        <div class="dark:bg-gray-600 dark:text-white max-w-6xl mx-auto bg-gray-300 max-h-fit rounded-3xl shadow-2xl mt-16">
+            <div
+                class="grid gap-4 grid-cols-2 justify-between"
+                :class="!$page.props.auth.user?'border-b-2':''"
+            >
 
-            <div class="flex">
-                <Image
-                    :image="product.image"
-                    class="my-auto"
-                    :classes="'relative z-0 right-20 hover:right-24 rounded-l-full rounded-r-lg h-96 shadow hover:shadow-2xl shadow-gray-900  object-fill object-center'"
-                />
+                <!--Image-->
+                <div class="flex">
+                    <Image
+                        :image="product.image"
+                        class="my-auto"
+                        :classes="'relative z-0 right-20 hover:right-24 rounded-l-full rounded-r-lg h-96 shadow hover:shadow-2xl shadow-gray-900  object-fill object-center'"
+                    />
+                </div>
+
+                <div class="col-span-1 px-2 py-10 sm:px-6">
+                    <Name
+                        :name="product.name"
+                        :classes="'text-3xl px-16'"
+                    />
+                    <Description :description="product.description" />
+
+                    <hr class="my-8">
+
+                    <!--Stock-->
+                    <div class="flex justify-between items-center">
+                        <Stock :stock="product.stock" />
+                        <Discount :discount="product.discount" />
+                    </div>
+
+                    <!--Price-->
+                    <div class="flex justify-between items-center text-md mb-1 leading-6 font-medium text-white">
+                        <OldPrice :product="product" />
+                        <Price :product="product" />
+                    </div>
+
+                    <!--EditDelete-->
+                    <div
+                        class="flex justify-between items-center place-items-end mt-3"
+                        v-if="!!$page.props.auth.user "
+                    >
+                        <Edit :slug="product.slug" />
+                        <Delete :slug="product.slug" />
+                    </div>
+                </div>
+
             </div>
-
-            <div class="col-span-1 px-2 py-10 sm:px-6">
-                <Name
-                    :name="product.name"
-                    :classes="'text-3xl px-16'"
-                />
-                <Description :description="product.description" />
-
-                <hr class="my-8">
-
-                <div class="flex justify-between items-center">
-                    <Stock :stock="product.stock" />
-                    <Discount :discount="product.discount" />
+                <div class="py-10 max-w-4xl mx-auto" v-if="!$page.props.auth.user">
+                    Hello
                 </div>
-
-                <div class="flex justify-between items-center text-md mb-1 leading-6 font-medium text-white">
-                    <Price :product="product" />
-                    <OldPrice :product="product" />
-                </div>
-
-                <div
-                    class="flex justify-between items-center place-items-end mt-3"
-                    v-if="!!$page.props.auth.user "
-                >
-                    <Edit :slug="product.slug" />
-                    <Delete :slug="product.slug" />
-                </div>
-            </div>
         </div>
     </authenticated-layout>
 </template>

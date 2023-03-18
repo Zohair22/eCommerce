@@ -44,8 +44,8 @@ let props = defineProps({
         </div>
 
         <div class="flex justify-between items-center text-md mb-1 leading-6 font-medium text-white">
-            <Price :product="product" />
             <OldPrice :product="product" />
+            <Price :product="product" />
         </div>
 
         <div

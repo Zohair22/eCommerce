@@ -37,4 +37,10 @@ class CategoryController extends Controller
     {
         return new CategoryResource($this->categoryRepository->update($category));
     }
+
+    public function destroy(Category $category): CategoryResource
+    {
+        return new CategoryResource($this->categoryRepository->delete($category));
+    }
+
 }

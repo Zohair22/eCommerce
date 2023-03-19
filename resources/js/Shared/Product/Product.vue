@@ -31,7 +31,7 @@ let props = defineProps({
             :href="'/product/'+ product.slug + '/show'"
         >
             <Name
-                :classes="'px-5'"
+                :classes="'px-5 rounded-b-3xl'"
                 :name="product.name"
             />
         </Link>

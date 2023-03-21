@@ -19,7 +19,7 @@ class CategoryRepository
 
     public function getAllCategories()
     {
-        return $this->category->latest()->filter(request(['search']))->paginate(5)->withQueryString();
+        return $this->category->latest()->filter(request(['search']));
     }
 
     public function create(): Category

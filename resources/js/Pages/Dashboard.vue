@@ -9,10 +9,10 @@ import Success from "@/Shared/Product/Success.vue";
 import EditCategory from "@/Shared/Category/EditCategory.vue";
 import DeleteCategory from "@/Shared/Category/DeleteCategory.vue";
 
-let props = defineProps({
-    filters: Object,
-    categories: Array
-});
+let props = defineProps([
+    'categories',
+    'filters'
+]);
 
 let search = ref(props.filters.search);
 
@@ -65,7 +65,7 @@ let submit = () => (search, function (value) {
         <div class="py-12">
             <div
                 class="max-w-7xl mx-auto sm:px-6 lg:px-8"
-                v-for="category in categories.data"
+                v-for="category in categories"
                 :key="category.id"
             >
                 <Success :success="$page.props.success" />
@@ -88,6 +88,5 @@ let submit = () => (search, function (value) {
                 </div>
             </div>
         </div>
-        <Pagination :links="categories.links" />
     </AuthenticatedLayout>
 </template>

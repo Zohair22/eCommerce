@@ -12,7 +12,3 @@ defineProps({
     'slug':String
 })
 </script>
-
-<style scoped>
-
-</style>

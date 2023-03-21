@@ -46,7 +46,7 @@ let submit = () => {
             </div>
         </template>
 
-        <div class="dark:bg-gray-600 dark:text-white max-w-6xl mx-auto bg-gray-300 max-h-fit rounded-3xl shadow-2xl mt-16">
+        <div class="dark:bg-gray-600 dark:text-white max-w-5xl mx-auto bg-gray-300 max-h-fit rounded-3xl shadow-2xl mt-16">
             <div
                 class="grid gap-4 grid-cols-2 justify-between"
                 :class="!$page.props.auth.user && !!showin?'border-b-2':''"
@@ -56,8 +56,8 @@ let submit = () => {
                 <div class="flex">
                     <Image
                         :image="product.image"
-                        class="my-auto"
                         :classes="'relative z-0 right-20 hover:right-24 rounded-l-full rounded-r-lg h-96 shadow hover:shadow-2xl shadow-gray-900  object-fill object-center'"
+                        class="my-auto"
                     />
                 </div>
 
@@ -90,7 +90,7 @@ let submit = () => {
                         <Edit :slug="product.slug" />
                         <Delete :slug="product.slug" />
                     </div>
-                    <h3 class="leading-6 text-center dark:text-white w-full">
+                    <h3 class="leading-6 text-center dark:text-white w-full" v-else>
                         <div
                             v-text="'Buy Product'"
                             class="bg-teal-500 mx-auto hover:bg-teal-700 w-fit cursor-pointer text-white px-4 py-0.5 rounded-2xl w-fit dark:bg-teal-700 dark:hover:bg-teal-800 transition-all transform duration-700"

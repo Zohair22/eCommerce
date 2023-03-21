@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function index(): Response
     {
-        $categories = $this->categoryRepository->getAllCategories();
+        $categories = $this->categoryRepository->getAllCategories()->get();
         $filters = Request::all(['search']);
         return Inertia::render('Dashboard', compact('filters','categories'));
     }

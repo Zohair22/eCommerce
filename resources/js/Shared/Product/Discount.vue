@@ -12,9 +12,9 @@
 </template>
 
 <script setup>
-defineProps({
-    'discount': String
-})
+defineProps([
+    'discount',
+])
 </script>
 
 <style scoped>

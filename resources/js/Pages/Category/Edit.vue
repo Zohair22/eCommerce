@@ -22,7 +22,7 @@
                             <label class="block text-gray-700 dark:text-gray-100 text-sm font-bold mb-2" for="name">
                                 Category Name
                             </label>
-                            <input class="shadow appearance-none border required rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" required placeholder="Category Name" v-model="category.name">
+                            <input class="shadow appearance-none border required rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" required placeholder="Category Name" v-model="form.name">
                             <p
                                 v-if="$page.props.errors.name"
                                 v-for="$error in $page.props.errors.name"
@@ -40,7 +40,7 @@
                                 type="text"
                                 required
                                 placeholder="Category Description"
-                                v-model="category.description"
+                                v-model="form.description"
                                 rows="12"
                             />
                             <p
@@ -50,7 +50,7 @@
                                 class="text-red-500 text-sm mt-1"
                             />
                         </div>
-                            <input type="text" hidden v-model="category.slug">
+                            <input type="text" hidden v-model="form.slug">
                             <p
                                 v-if="$page.props.errors.slug"
                                 v-text="$page.props.errors.slug"
@@ -76,14 +76,14 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {useForm} from "@inertiajs/inertia-vue3";
 
-let props = defineProps([
-    'category'
-    ]);
+let props  = defineProps({
+    category: Array,
+})
 
 let form = useForm(props.category);
 
 let submit  = () => {
-    form.patch('/category/'+props.category.name, { preserveScroll: true, preserveState: true});
+    form.patch('/category/'+props.category.slug, { preserveScroll: true, preserveState: true});
 }
 </script>
 

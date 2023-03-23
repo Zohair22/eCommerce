@@ -62,10 +62,12 @@ let submit = () => (search, function (value) {
             </div>
         </template>
 
-        <div class="py-12">
+        <Pagination :links="categories.links" />
+
+        <div class="mt-0">
             <div
                 class="max-w-7xl mx-auto sm:px-6 lg:px-8"
-                v-for="category in categories"
+                v-for="category in categories.data"
                 :key="category.id"
             >
                 <Success :success="$page.props.success" />
@@ -76,8 +78,8 @@ let submit = () => (search, function (value) {
                 >
 
                     <div class="flex items-center justify-between" v-if="!!$page.props.auth.user">
-                        <EditCategory :name="category.name" />
-                        <DeleteCategory :name="category.name" />
+                        <EditCategory :slug="category.slug" />
+                        <DeleteCategory :slug="category.slug" />
                     </div>
 
                     <Category
@@ -87,6 +89,7 @@ let submit = () => (search, function (value) {
 
                 </div>
             </div>
+            <Pagination :links="categories.links" />
         </div>
     </AuthenticatedLayout>
 </template>

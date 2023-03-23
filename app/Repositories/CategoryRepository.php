@@ -4,13 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Category;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rule;
 
 class CategoryRepository
 {
 
-    public $getAllCategories;
     private Category $category;
     public function __construct()
     {
@@ -19,7 +17,7 @@ class CategoryRepository
 
     public function getAllCategories()
     {
-        return $this->category->latest()->filter(request(['search']));
+        return $this->category->latest()->filter(request(['search']))->paginate(5)->withQueryString();
     }
 
     public function create(): Category
@@ -38,9 +36,9 @@ class CategoryRepository
     }
 
 
-
-    public function update(Category $category): bool
+    public function update(Category $category)
     {
+        $category = Category::where('slug', $category['slug'])->first();
         $request = request()->validate([
             'name' => 'required|string|max:255|'. Rule::unique('categories')->ignore
                 ($category->id),
@@ -49,12 +47,13 @@ class CategoryRepository
             'description' => 'required|string',
         ]);
         $request['slug'] = str_slug($request['name']);
-        return $category->update($request);
+        $category->update($request);
+        return $request['name'];
     }
 
-    public function delete(Category $category): bool
+    public function delete(Category $category)
     {
-        $category = Category::where('name', $category['name'])->first();
+        $category = Category::where('slug', $category['slug'])->first();
         return $category->delete();
     }
 }

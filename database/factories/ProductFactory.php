@@ -25,7 +25,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 0, 1000),
             'stock' => $this->faker->randomDigit,
             'discount' => $this->faker->randomFloat(2, -1, 50),
-            'category_id' => $this->faker->numberBetween(1, 10),
+            'category_id' => $this->faker->numberBetween(1, 20),
             'user_id' => $this->faker->numberBetween(1, 4),
             'created_at' =>  $this->faker->dateTimeBetween('-3 year', Carbon::now()),
         ];

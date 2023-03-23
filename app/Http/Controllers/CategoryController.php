@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function index(): Response
     {
-        $categories = $this->categoryRepository->getAllCategories()->get();
+        $categories = $this->categoryRepository->getAllCategories();
         $filters = Request::all(['search']);
         return Inertia::render('Dashboard', compact('filters','categories'));
     }
@@ -57,6 +57,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category): Response
     {
+        $category = Category::where('slug', $category['slug'])->first();
         return Inertia::render('Category/Edit', compact('category'));
     }
 
@@ -65,14 +66,14 @@ class CategoryController extends Controller
      */
     public function update(Category $category): RedirectResponse
     {
-        $this->categoryRepository->update($category);
-        return redirect('/?search='.$category['name'])->with('success', 'Category updated successfully');
+        $category = $this->categoryRepository->update($category);
+        return redirect('/?search='.$category)->with('success', 'Category updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
         $this->categoryRepository->delete($category);
         return redirect()->route('dashboard')->with('success', 'Category deleted successfully');

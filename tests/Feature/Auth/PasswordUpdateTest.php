@@ -11,6 +11,9 @@ class PasswordUpdateTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * @throws \JsonException
+     */
     public function test_password_can_be_updated(): void
     {
         $user = User::factory()->create();

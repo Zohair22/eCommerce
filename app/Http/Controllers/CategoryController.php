@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -40,7 +41,15 @@ class CategoryController extends Controller
      */
     public function store(): RedirectResponse
     {
-        $this->categoryRepository->create();
+        $request = request()->validate([
+            'name' => ['required', 'string', 'max:255', 'unique:categories'],
+            'slug' => ['unique:categories'],
+            'description' => ['required', 'string'],
+            'created_at' => [''],
+            'updated_at' => [''],
+        ]);
+        $request['slug'] = str_slug($request['name'],'','');
+        $this->categoryRepository->create($request);
         return redirect()->route('dashboard')->with('success', 'Category created successfully');
     }
 
@@ -66,7 +75,15 @@ class CategoryController extends Controller
      */
     public function update(Category $category): RedirectResponse
     {
-        $category = $this->categoryRepository->update($category);
+        $request = request()->validate([
+            'name' => 'required|string|max:255|'. Rule::unique('categories')->ignore
+                ($category->id),
+            'slug' => 'required|string|max:255|'. Rule::unique('categories')->ignore
+                ($category->id),
+            'description' => 'required|string',
+        ]);
+        $request['slug'] = str_slug($request['name']);
+        $this->categoryRepository->update($category, $request);
         return redirect('/?search='.$category)->with('success', 'Category updated successfully');
     }
 

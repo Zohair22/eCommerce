@@ -7,6 +7,7 @@ use App\Repositories\ProductRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -38,7 +39,25 @@ class ProductController extends Controller
      */
     public function store(): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
-        $category = $this->productRepository->store();
+        $request = request()->validate([
+            'name' => 'required|unique:products,name',
+            'slug' => 'unique:products,slug',
+            'price' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'discount' => 'required',
+            'stock' => 'required',
+            'category_id' => 'required',
+            'user_id' => '',
+        ]);
+        $request['slug'] = str_slug($request['name']);
+        if (isset($request['image']))
+        {
+            $request['image'] = request('image')->store(('images'));
+        }
+        $request['user_id'] = auth()->user()->id;
+
+        $category = $this->productRepository->store($request);
         $category = $category->first();
         return redirect('/?search='.$category['name']);
     }
@@ -48,7 +67,7 @@ class ProductController extends Controller
      */
     public function show(Product $product): Response
     {
-        $product = $this->productRepository->find($product);
+        $product = $this->productRepository->getOneProduct($product);
         return Inertia::render('Product/Show', compact('product'));
     }
 
@@ -57,7 +76,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product): Response
     {
-        $product = $this->productRepository->find($product);
+        $product = $this->productRepository->getOneProduct($product);
         return Inertia::render('Product/Edit', compact('product'));
     }
 
@@ -66,7 +85,28 @@ class ProductController extends Controller
      */
     public function update(Product $product): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
-        $this->productRepository->update($product);
+        $request = request()->validate([
+            'name' => [ 'required', Rule::unique('products')->ignore($product->id) ],
+            'slug' => [ Rule::unique('products')->ignore($product->id) ],
+            'price' => 'required',
+            'description' => 'required',
+            'discount' => 'required',
+            'stock' => 'required',
+            'category_id' => 'required',
+            'user_id' => '',
+                request('image') !== $product->image ?? 'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+
+        $request['slug'] = str_slug($request['name']);
+
+        if ( !!request('image') && request('image') !== $product->image)
+        {
+            $request['image'] = request('image')->store(('images'));
+        }
+
+        $request['user_id'] = auth()->user()->id;
+        $this->productRepository->update($product, $request);
         return redirect()->back()->with('success', 'Product Updated Successfully');
     }
 

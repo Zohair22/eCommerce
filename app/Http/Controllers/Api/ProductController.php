@@ -22,12 +22,12 @@ class ProductController extends Controller
 
     public function show(Product $product): ProductResource
     {
-        return new ProductResource($this->productRepository->find($product));
+        return new ProductResource($this->productRepository->getOneProduct($product));
     }
 
     public function edit(Product $product): ProductResource
     {
-        return new ProductResource($this->productRepository->find($product));
+        return new ProductResource($this->productRepository->getOneProduct($product));
     }
 
     public function update(Product $product): ProductResource

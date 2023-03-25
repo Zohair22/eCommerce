@@ -36,7 +36,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'allCats' => Category::with('products')->get(),
+            'allCats' => Category::all(),
             'allProducts' => Product::all(),
 
             'ziggy' => function () use ($request) {
